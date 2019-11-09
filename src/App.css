@@ -100,15 +100,6 @@ button {
 *
 */
 
-/*@media screen and (max-width: 564px) {
-
-}
-
-@media screen and (min-width: 565px) and (max-width: 1064px) {
-
-}*/
-
-
 @media  screen and (max-width: 426px) {
 	.app { 
 		flex-direction: column; 
