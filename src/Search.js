@@ -8,9 +8,9 @@ class Search extends Component {
 			<div className="search-content">
 				<form method="get" className="form">
 					<div className="input-container">
-						{/*<i className="fas fa-search position-left"></i>*/}
+						<i className="fas fa-search position-left"></i>
 						<input type="text" className="search"/>
-						{/*<i className="fas fa-microphone position-right"></i>*/}
+						<i className="fas fa-microphone position-right"></i>
 					</div>
 					<div className="list-container">
 						<ul>
