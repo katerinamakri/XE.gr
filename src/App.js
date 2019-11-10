@@ -7,29 +7,18 @@ class App extends Component {
 	constructor(props) {
 		super(props)
 
+
 		this.state = {
-			query:''
+			locationsList:[],
+			query:'',
+			limit:this.isMobile(),
+			selectedLocation:'',
+			hasListData: false
 		}
 	}
 
-	componentDidMount() {
-		this.fetchSearchResults();
-	}
-
-	fetchSearchResults = () => {
-		let limit;
-
-		const isMobile = this.isMobile();
-
-		console.log(isMobile)
-
-		if ( isMobile === true ) {
-			limit = 10;
-		} else {
-			limit = 20;
-		}
-
-		let apiUrl=`http://35.180.182.8/Search?keywords=athens&language=en&limit=${limit}`;
+	fetchSearchResults = (query,limit) => {
+		let apiUrl=`http://35.180.182.8/Search?keywords=${query}&language=en&limit=${limit}`;
 
 		fetch(apiUrl, {
 			method:'GET',
@@ -41,16 +30,43 @@ class App extends Component {
 			return response.json();
 		})
 		.then((data) => {
-			console.log(data)
+
+			this.setState({
+				locationsList: data.entries,
+				hasListData: data.entries.length > 0,
+			});
 		})
+		.catch((err) => {
+         console.log(err)
+      })
+	}
+
+	handleSelectedLocation = (location) => {
+
+		this.setState({ query: location })
+	}
+
+	searchingFor = (term) => {
+
+		if (term.length >= 2) {			
+			this.setState({ query: term }, () => {
+				this.fetchSearchResults(this.state.query, this.state.limit);
+			});
+		}
+
+		if (term.length === 0) {
+			this.setState ({ 
+				locationsList:[],
+				hasListData: false
+			});
+		}
 	}
 
 	isMobile = () => {
-		console.log(window.innerWidth)
 	   if (window.innerWidth <= 425 && window.innerHeight <= 823) {
-	     return true;
+			return 10
 	   } else {
-	     return false;
+			return 20
 	   }
 	}
 
@@ -65,7 +81,14 @@ class App extends Component {
 				</div>
 				<div className="search-container">
 					<p>What place are you looking for?</p>
-					<Search />
+					<Search
+						hasListData={this.state.hasListData}
+						locationsList={this.state.locationsList} 
+						handleSelectedLocation={this.handleSelectedLocation} 
+						selectedLocation={this.state.selectedLocation}
+						searchingFor={this.searchingFor}
+						// query={this.state.query}
+					/>
 				</div>
 			</div>
 		);
