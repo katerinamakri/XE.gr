@@ -9,15 +9,18 @@ class App extends Component {
 
 
 		this.state = {
-			locationsList:[],
 			query:'',
 			limit:this.isMobile(),
-			hasListData: false
+			language:this.detectLanguage(),
+			locationsList:[],
+			hasListData: false,
 		}
 	}
 
-	fetchSearchResults = (query,limit) => {
-		let apiUrl=`http://35.180.182.8/Search?keywords=${query}&language=en&limit=${limit}`;
+	fetchSearchResults = (query,language,limit) => {
+		let apiUrl=`http://35.180.182.8/Search?keywords=${query}&language=${language}&limit=${limit}`;
+
+		console.log(apiUrl)
 
 		fetch(apiUrl, {
 			method:'GET',
@@ -46,10 +49,10 @@ class App extends Component {
 	}
 
 	searchingFor = (term) => {
-		
+
 		// if (term.length >= 2) {			
 			this.setState({ query: term }, () => {
-				this.fetchSearchResults(this.state.query, this.state.limit);
+				this.fetchSearchResults(this.state.query, this.state.language ,this.state.limit);
 			});
 		// }
 
@@ -67,6 +70,14 @@ class App extends Component {
 	   } else {
 			return 20
 	   }
+	}
+
+	detectLanguage = () => {
+		if (navigator.language === 'el-GR')
+			return 'el'
+		else if (navigator.language === 'en-US') {
+			return 'en'
+		}
 	}
 
    render() {
