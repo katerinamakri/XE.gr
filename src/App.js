@@ -12,7 +12,6 @@ class App extends Component {
 			locationsList:[],
 			query:'',
 			limit:this.isMobile(),
-			selectedLocation:'',
 			hasListData: false
 		}
 	}
@@ -47,10 +46,7 @@ class App extends Component {
 	}
 
 	searchingFor = (term) => {
-
-		console.log(term)
-		console.log('it was called')
-
+		
 		// if (term.length >= 2) {			
 			this.setState({ query: term }, () => {
 				this.fetchSearchResults(this.state.query, this.state.limit);
@@ -87,8 +83,7 @@ class App extends Component {
 					<Search
 						hasListData={this.state.hasListData}
 						locationsList={this.state.locationsList} 
-						handleSelectedLocation={this.handleSelectedLocation} 
-						selectedLocation={this.state.selectedLocation}
+						handleSelectedLocation={this.handleSelectedLocation}
 						searchingFor={this.searchingFor}
 						query={this.state.query}
 					/>

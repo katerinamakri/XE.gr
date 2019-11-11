@@ -9,7 +9,7 @@ class Search extends Component {
 
 		return (
 			<div className="search-content">
-				<form action={ "https://www.google.com/"+ this.props.selectedLocation } method="get" className="form" >
+				<form action="https://www.google.com/" method="get" className="form" >
 					<div className="input-container">
 						<i className="fas fa-search position-left"></i>
 						<input type="text" name="query" className="search" value={ this.props.query } onChange={(event) => this.props.searchingFor(event.target.value)} />
@@ -25,7 +25,7 @@ class Search extends Component {
 						</ul>
 					</div>
 					<div className="button-container">
-						<button>Click to Search</button>
+						<button disabled={!this.props.hasListData}>Click to Search</button>
 					</div>
 				</form>
 			</div>
