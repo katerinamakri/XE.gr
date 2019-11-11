@@ -48,11 +48,14 @@ class App extends Component {
 
 	searchingFor = (term) => {
 
-		if (term.length >= 2) {			
+		console.log(term)
+		console.log('it was called')
+
+		// if (term.length >= 2) {			
 			this.setState({ query: term }, () => {
 				this.fetchSearchResults(this.state.query, this.state.limit);
 			});
-		}
+		// }
 
 		if (term.length === 0) {
 			this.setState ({ 
@@ -87,7 +90,7 @@ class App extends Component {
 						handleSelectedLocation={this.handleSelectedLocation} 
 						selectedLocation={this.state.selectedLocation}
 						searchingFor={this.searchingFor}
-						// query={this.state.query}
+						query={this.state.query}
 					/>
 				</div>
 			</div>

@@ -6,6 +6,7 @@ class Search extends Component {
 	render() {
 
 		let toggleLocationsList = this.props.hasListData ? "block" : "none";
+
 		return (
 			<div className="search-content">
 				<form action={ "https://www.google.com/"+ this.props.selectedLocation } method="get" className="form" >
@@ -17,7 +18,7 @@ class Search extends Component {
 					<div className="list-container" style={{ display: toggleLocationsList }}>
 						<ul>
 						{this.props.locationsList.map((location,index) =>
-							<li key={index} value={location.name}>
+							<li key={index} >
 								<button type="button" onClick={() => this.props.handleSelectedLocation(location.name)}>{ location.name }</button>
 							</li>
 						)}
