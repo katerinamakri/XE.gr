@@ -5,7 +5,7 @@ class Search extends Component {
 
 	render() {
 
-		let toggleLocationsList = this.props.hasListData ? "block" : "none";
+		let toggleLocationsList = this.props.expandListData ? "block" : "none";
 
 		return (
 			<div className="search-content">
@@ -25,7 +25,7 @@ class Search extends Component {
 						</ul>
 					</div>
 					<div className="button-container">
-						<button disabled={!this.props.hasListData}>Click to Search</button>
+						<button disabled={this.props.locationsList.length === 0}>Click to Search</button>
 					</div>
 				</form>
 			</div>

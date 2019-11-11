@@ -13,7 +13,7 @@ class App extends Component {
 			limit:this.isMobile(),
 			language:this.detectLanguage(),
 			locationsList:[],
-			hasListData: false,
+			expandListData: false,
 		}
 	}
 
@@ -35,7 +35,7 @@ class App extends Component {
 
 			this.setState({
 				locationsList: data.entries,
-				hasListData: data.entries.length > 0,
+				expandListData: data.entries.length > 0,
 			});
 		})
 		.catch((err) => {
@@ -45,7 +45,10 @@ class App extends Component {
 
 	handleSelectedLocation = (location) => {
 
-		this.setState({ query: location })
+		this.setState({ 
+			query: location,
+			expandListData: false
+		})
 	}
 
 	searchingFor = (term) => {
@@ -59,7 +62,7 @@ class App extends Component {
 		if (term.length === 0) {
 			this.setState ({ 
 				locationsList:[],
-				hasListData: false
+				expandListData: false
 			});
 		}
 	}
@@ -92,7 +95,7 @@ class App extends Component {
 				<div className="search-container">
 					<p>What place are you looking for?</p>
 					<Search
-						hasListData={this.state.hasListData}
+						expandListData={this.state.expandListData}
 						locationsList={this.state.locationsList} 
 						handleSelectedLocation={this.handleSelectedLocation}
 						searchingFor={this.searchingFor}
