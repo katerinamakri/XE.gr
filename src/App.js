@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Search from './Search.js';
+import debounce from 'lodash.debounce';
 
 class App extends Component {
 
@@ -15,6 +16,8 @@ class App extends Component {
 			locationsList:[],
 			expandListData: false,
 		}
+
+		this.callDebounce = debounce( this.delayedFetch, 2000);
 	}
 
 	fetchSearchResults = (query,language,limit) => {
@@ -52,10 +55,11 @@ class App extends Component {
 	}
 
 	searchingFor = (term) => {
+		// if (term.length === 1) { return }
 
-		// if (term.length >= 2) {			
-			this.setState({ query: term }, () => {
-				this.fetchSearchResults(this.state.query, this.state.language ,this.state.limit);
+		// if (term.length > 2 || this.state.query.length !== 0) {	
+			this.setState({ query: term }, (...args) => {
+				this.callDebounce(args);
 			});
 		// }
 
@@ -65,6 +69,10 @@ class App extends Component {
 				expandListData: false
 			});
 		}
+	}
+
+	delayedFetch = (query, language, limit) => { 
+		this.fetchSearchResults(this.state.query, this.state.language ,this.state.limit); 
 	}
 
 	isMobile = () => {
