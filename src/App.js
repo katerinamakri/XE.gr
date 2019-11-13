@@ -17,13 +17,13 @@ class App extends Component {
 			expandListData: false,
 		}
 
-		this.callDebounce = debounce( this.delayedFetch, 2000);
+		this.callDebounce = debounce( this.delayedFetch, 1000);
 	}
 
 	fetchSearchResults = (query,language,limit) => {
 		let apiUrl=`http://35.180.182.8/Search?keywords=${query}&language=${language}&limit=${limit}`;
 
-		console.log(apiUrl)
+		// console.log(apiUrl)
 
 		fetch(apiUrl, {
 			method:'GET',
@@ -55,13 +55,12 @@ class App extends Component {
 	}
 
 	searchingFor = (term) => {
-		// if (term.length === 1) { return }
-
-		// if (term.length > 2 || this.state.query.length !== 0) {	
 			this.setState({ query: term }, (...args) => {
+				if (this.state.query.length <= 2) {
+					return 
+				}
 				this.callDebounce(args);
 			});
-		// }
 
 		if (term.length === 0) {
 			this.setState ({ 
