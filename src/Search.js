@@ -5,7 +5,8 @@ class Search extends Component {
 
 	render() {
 
-		let toggleLocationsList = this.props.expandListData ? "block" : "none";
+		let toggleLocationsList = ( this.props.expandListData && this.props.isLoading === false ) ? "block" : "none";
+		let displayLoading = this.props.isLoading ? "block" : "none";
 
 		return (
 			<div className="search-content">
@@ -15,6 +16,9 @@ class Search extends Component {
 						<input type="text" name="query" className="search" value={ this.props.query } onChange={(event) => this.props.searchingFor(event.target.value)} />
 						<i className="fas fa-microphone position-right"></i>
 					</div>
+
+					<p style={{ display: displayLoading }}>Loading...</p>
+
 					<div className="list-container" style={{ display: toggleLocationsList }}>
 						<ul>
 						{this.props.locationsList.map((location,index) =>

@@ -8,13 +8,13 @@ class App extends Component {
 	constructor(props) {
 		super(props)
 
-
 		this.state = {
 			query:'',
 			limit:this.isMobile(),
 			language:this.detectLanguage(),
 			locationsList:[],
 			expandListData: false,
+			isLoading:false
 		}
 
 		this.callDebounce = debounce( this.delayedFetch, 1000);
@@ -24,6 +24,7 @@ class App extends Component {
 		let apiUrl=`http://35.180.182.8/Search?keywords=${query}&language=${language}&limit=${limit}`;
 
 		// console.log(apiUrl)
+		this.setState({ isLoading:true })
 
 		fetch(apiUrl, {
 			method:'GET',
@@ -39,6 +40,7 @@ class App extends Component {
 			this.setState({
 				locationsList: data.entries,
 				expandListData: data.entries.length > 0,
+				isLoading:false
 			});
 		})
 		.catch((err) => {
@@ -47,30 +49,28 @@ class App extends Component {
 	}
 
 	handleSelectedLocation = (location) => {
-
 		this.setState({ 
 			query: location,
 			expandListData: false
 		})
 	}
 
-	searchingFor = (term) => {
-			this.setState({ query: term }, (...args) => {
-				if (this.state.query.length <= 2) {
-					return 
-				}
-				this.callDebounce(args);
-			});
+	searchingFor = (term) => {	
+		this.setState({ query: term }, (...args) => {
+			this.callDebounce(args);
+		});
 
 		if (term.length === 0) {
 			this.setState ({ 
 				locationsList:[],
-				expandListData: false
+				expandListData: false,
+				isLoading:false
 			});
 		}
 	}
 
-	delayedFetch = (query, language, limit) => { 
+	delayedFetch = () => {
+		if (this.state.query.length <= 2) {	return } 
 		this.fetchSearchResults(this.state.query, this.state.language ,this.state.limit); 
 	}
 
@@ -107,6 +107,7 @@ class App extends Component {
 						handleSelectedLocation={this.handleSelectedLocation}
 						searchingFor={this.searchingFor}
 						query={this.state.query}
+						isLoading={this.state.isLoading}
 					/>
 				</div>
 			</div>
