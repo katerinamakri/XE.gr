@@ -1,4 +1,4 @@
-# ΧΕ - Xrisi Efkeria
+# ΧΕ - Xrysi Eukairia
 The assignment is writtern using ReactJS.
 
 ## Prequisites
