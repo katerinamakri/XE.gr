@@ -1,5 +1,5 @@
 # ΧΕ - Xrysi Eukairia
-The assignment is writtern using ReactJS.
+The assignment is written using ReactJS.
 
 ## Prequisites
 You will need to have installed NodeJs version 8.16.0 or above
@@ -18,4 +18,3 @@ Afterwards I fetched data according to user input, set the language according to
 After finishing with this, I put a check to deactivate the button and started thinking how I could delay the request until a user stopped typing. For this implementation, I had to do some research. In the end I used a debounce function from lodash which I set to do the fetch after a few seconds while user stop typing.
 I continued with the validation for the input field and added a loading message.
 Before submitting my assignment, I did some code refactoring and wrote this README.
-
