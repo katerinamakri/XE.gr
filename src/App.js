@@ -9,22 +9,21 @@ class App extends Component {
 		super(props)
 
 		this.state = {
-			query:'',
-			limit:this.isMobile(),
-			language:this.detectLanguage(),
-			locationsList:[],
+			query: '',
+			limit: this.isMobile(),
+			language: this.detectLanguage(),
+			locationsList: [],
 			expandListData: false,
-			isLoading:false
+			isLoading: false
 		}
 
-		this.callDebounce = debounce( this.delayedFetch, 1000);
+		this.callDebounce = debounce(this.delayedFetch, 1000);
 	}
 
 	fetchSearchResults = (query,language,limit) => {
 		let apiUrl=`http://35.180.182.8/Search?keywords=${query}&language=${language}&limit=${limit}`;
 
-		// console.log(apiUrl)
-		this.setState({ isLoading:true })
+		this.setState({isLoading:true})
 
 		fetch(apiUrl, {
 			method:'GET',
@@ -36,16 +35,15 @@ class App extends Component {
 			return response.json();
 		})
 		.then((data) => {
-
 			this.setState({
 				locationsList: data.entries,
 				expandListData: data.entries.length > 0,
-				isLoading:false
+				isLoading: false
 			});
 		})
 		.catch((err) => {
-         console.log(err)
-      })
+			console.log(err)
+		})
 	}
 
 	handleSelectedLocation = (location) => {
@@ -56,15 +54,15 @@ class App extends Component {
 	}
 
 	searchingFor = (term) => {	
-		this.setState({ query: term }, (...args) => {
-			this.callDebounce(args);
+		this.setState({query: term}, () => {
+			this.callDebounce();
 		});
 
 		if (term.length === 0) {
 			this.setState ({ 
-				locationsList:[],
+				locationsList: [],
 				expandListData: false,
-				isLoading:false
+				isLoading: false
 			});
 		}
 	}
@@ -75,22 +73,22 @@ class App extends Component {
 	}
 
 	isMobile = () => {
-	   if (window.innerWidth <= 425 && window.innerHeight <= 823) {
+		if (window.innerWidth <= 500 && window.innerHeight <= 768) {
 			return 10
-	   } else {
+		} else {
 			return 20
-	   }
+		}
 	}
 
 	detectLanguage = () => {
 		if (navigator.language === 'el-GR')
 			return 'el'
-		else if (navigator.language === 'en-US') {
+		else {
 			return 'en'
 		}
 	}
 
-   render() {
+	render() {
 		return (
 			<div className="app">
 				<div className="banner-container">
@@ -112,7 +110,7 @@ class App extends Component {
 				</div>
 			</div>
 		);
-   }
+	}
 }
 
 export default App;
